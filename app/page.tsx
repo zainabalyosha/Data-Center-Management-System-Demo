@@ -1,4 +1,5 @@
-"use client"
+
+  "use client"
 
 import { useState, useEffect } from "react"
 import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider } from "@/components/ui/sidebar"
@@ -533,11 +534,15 @@ export default function CaliforniaHeatwaveDemo() {
                               <div className="text-xs mb-1 text-muted-foreground font-semibold">
                                 {data.temperature}°
                               </div>
-                              <div
-                                className="w-full bg-gradient-to-t from-orange-500 to-red-500 rounded-t-sm transition-all duration-300"
-                                style={{ height: `${Math.max(height, 10)}%` }}
-                                title={`${data.temperature}°C at ${i}:00`}
-                              />
+                           <div
+  className="w-full rounded-t-sm transition-all duration-300" // <- gradient moved inline to avoid purge
+  style={{
+    height: `${Math.max(height, 10)}%`,
+    background: 'linear-gradient(to top, #f97316, #ef4444)',
+  }}
+  title={`${data.temperature ?? '—'}°C at ${i}:00`}
+/>
+
                               <div className="text-xs mt-1 text-muted-foreground">{i}h</div>
                             </div>
                           )
@@ -560,28 +565,28 @@ export default function CaliforniaHeatwaveDemo() {
                   <CardContent>
                     <div className="h-[300px] p-4">
                       <div className="relative w-48 h-48 mx-auto">
-                        {generateEnergyData().map((segment, index) => {
-                          const total = generateEnergyData().reduce((sum, s) => sum + s.value, 0)
-                          const percentage = (segment.value / total) * 100
-                          const startAngle = generateEnergyData()
-                            .slice(0, index)
-                            .reduce((sum, s) => sum + (s.value / total) * 360, 0)
-                          const endAngle = startAngle + (segment.value / total) * 360
+                        {(() => {
+  const data = generateEnergyData() // compute once
+  const total = data.reduce((s, d) => s + (d.value ?? 0), 0)
 
-                          return (
-                            <div
-                              key={segment.name}
-                              className="absolute inset-0 rounded-full"
-                              style={{
-                                background: `conic-gradient(from ${startAngle}deg, ${segment.color} 0deg, ${segment.color} ${endAngle - startAngle}deg, transparent ${endAngle - startAngle}deg)`,
-                                clipPath:
-                                  index === 0
-                                    ? "none"
-                                    : `polygon(50% 50%, 50% 0%, ${50 + 50 * Math.cos(((startAngle - 90) * Math.PI) / 180)}% ${50 + 50 * Math.sin(((startAngle - 90) * Math.PI) / 180)}%, ${50 + 50 * Math.cos(((endAngle - 90) * Math.PI) / 180)}% ${50 + 50 * Math.sin(((endAngle - 90) * Math.PI) / 180)}%)`,
-                              }}
-                            />
-                          )
-                        })}
+  if (!Number.isFinite(total) || total <= 0) {
+    return <div className="absolute inset-0 rounded-full" style={{ background: '#e5e7eb' }} />
+  }
+
+  let acc = 0
+  const stops = data
+    .map((d) => {
+      const v = d.value ?? 0
+      const start = (acc / total) * 360
+      acc += v
+      const end = (acc / total) * 360
+      return `${d.color} ${start}deg ${end}deg`
+    })
+    .join(', ')
+
+  return <div className="absolute inset-0 rounded-full" style={{ background: `conic-gradient(${stops})` }} />
+})()}
+
                         <div className="absolute inset-8 bg-background rounded-full flex items-center justify-center">
                           <div className="text-center">
                             <div className="text-2xl font-bold">{simulation.renewablePenetration || 45}%</div>
