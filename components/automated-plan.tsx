@@ -67,7 +67,7 @@ export function AutomatedPlan({ currentTemp, heatwaveActive, location, metrics }
     return [
       {
         id: "emergency",
-        name: "Emergency Response",
+        name: "Plan 1", // Changed from "Emergency Response" to "Plan 1"
         description: "Immediate crisis response with maximum cooling and load reduction",
         riskLevel: "critical",
         successRate: 92,
@@ -153,7 +153,7 @@ export function AutomatedPlan({ currentTemp, heatwaveActive, location, metrics }
       },
       {
         id: "conservative",
-        name: "Conservative Approach",
+        name: "Plan 2", // Changed from "Conservative Approach" to "Plan 2"
         description: "Low-risk gradual response with proven technologies",
         riskLevel: "low",
         successRate: 96,
@@ -239,7 +239,7 @@ export function AutomatedPlan({ currentTemp, heatwaveActive, location, metrics }
       },
       {
         id: "balanced",
-        name: "Balanced Strategy",
+        name: "Plan 3", // Changed from "Balanced Strategy" to "Plan 3"
         description: "Optimal mix of proven and innovative solutions",
         riskLevel: "medium",
         successRate: 89,
@@ -311,7 +311,7 @@ export function AutomatedPlan({ currentTemp, heatwaveActive, location, metrics }
       },
       {
         id: "aggressive",
-        name: "High-Performance Response",
+        name: "Plan 4", // Changed from "High-Performance Response" to "Plan 4"
         description: "Maximum efficiency with calculated high-impact measures",
         riskLevel: "high",
         successRate: 82,
@@ -383,7 +383,7 @@ export function AutomatedPlan({ currentTemp, heatwaveActive, location, metrics }
       },
       {
         id: "innovative",
-        name: "Next-Gen Solutions",
+        name: "Plan 5", // Changed from "Next-Gen Solutions" to "Plan 5"
         description: "Cutting-edge experimental technologies for maximum impact",
         riskLevel: "high",
         successRate: 75,
@@ -455,7 +455,7 @@ export function AutomatedPlan({ currentTemp, heatwaveActive, location, metrics }
       },
       {
         id: "cost-optimized",
-        name: "Cost-Optimized Response",
+        name: "Plan 6", // Changed from "Cost-Optimized Response" to "Plan 6"
         description: "Maximum efficiency with minimal financial impact",
         riskLevel: "medium",
         successRate: 85,
